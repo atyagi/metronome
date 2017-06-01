@@ -70,8 +70,8 @@ def test_disable_schedule():
         when the schedule is disabled.
     """
     client = metronome.create_client()
-    job_json = job_no_schedule('schedule-disabled')
-    job_id = job_json['id']
+    job_id = 'schedule-disabled-{}'.format(uuid.uuid4().hex)
+    job_json = job_no_schedule(job_id)
     with job(job_json):
         # indent
         job_schedule = schedule()
@@ -99,8 +99,8 @@ def test_disable_schedule_recovery_from_master_bounce():
         when the schedule is disabled.
     """
     client = metronome.create_client()
-    job_json = job_no_schedule('schedule-disabled')
-    job_id = job_json['id']
+    job_id = 'schedule-disabled-{}'.format(uuid.uuid4().hex)
+    job_json = job_no_schedule(job_id)
     with job(job_json):
         # indent
         job_schedule = schedule()
