@@ -34,7 +34,7 @@ node('shakedown') {
           try {
             sh "cp -f \"${DOT_SHAKEDOWN}\" ~/.shakedown"
             sh "dcos config set core.ssl_verify False"
-            sh "TERM=velocity shakedown --stdout all --stdout-inline --timeout ${timeout} --ssh-key-file \"${CLI_TEST_SSH_KEY}\" --dcos-url $params.dcos_url tests/system"
+            sh "TERM=velocity shakedown --stdout all --stdout-inline --timeout ${timeout} --ssh-key-file \"${CLI_TEST_SSH_KEY}\" --pytest-option "--junitxml=shakedown.xml" --dcos-url $params.dcos_url tests/system"
           } finally {
             junit allowEmptyResults: true, testResults: 'shakedown.xml'
           }
