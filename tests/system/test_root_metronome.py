@@ -81,7 +81,11 @@ def test_disable_schedule():
         # sleep until we run
         time.sleep(timedelta(minutes=1.1).total_seconds())
         runs = client.get_runs(job_id)
-        assert len(runs) == 1
+        run_count = len(runs)
+        # there is a race condition where this could be 1 or 2
+        # both are ok... what matters is that after disabled, that there are
+        # no more
+        assert run_count > 0
 
         # update enabled = False
         job_schedule['enabled'] = False
@@ -90,8 +94,8 @@ def test_disable_schedule():
         # wait for the next run
         time.sleep(timedelta(minutes=1.5).total_seconds())
         runs = client.get_runs(job_id)
-        # make sure there is still only 1
-        assert len(runs) == 1
+        # make sure there are no more than the original count
+        assert len(runs) == run_count
 
 
 def test_disable_schedule_recovery_from_master_bounce():
@@ -110,7 +114,11 @@ def test_disable_schedule_recovery_from_master_bounce():
         # sleep until we run
         time.sleep(timedelta(minutes=1.1).total_seconds())
         runs = client.get_runs(job_id)
-        assert len(runs) == 1
+        run_count = len(runs)
+        # there is a race condition where this could be 1 or 2
+        # both are ok... what matters is that after disabled, that there are
+        # no more
+        assert run_count > 0
 
         # update enabled = False
         job_schedule['enabled'] = False
@@ -123,8 +131,8 @@ def test_disable_schedule_recovery_from_master_bounce():
         # wait for the next run
         time.sleep(timedelta(minutes=1.5).total_seconds())
         runs = client.get_runs(job_id)
-        # make sure there is still only 1
-        assert len(runs) == 1
+        # make sure there are no more than the original count
+        assert len(runs) == run_count
 
 
 def test_update_schedule():
