@@ -25,6 +25,10 @@ Consult the full [Metronome REST API reference](http://dcos.github.io/metronome/
 
 An unofficial Go client library, [metronome-client](https://github.com/mindscratch/metronome-client) has been created for the v1 API.
 
+## Known Issues
+
+* Cron Scheduling Issue:   There is a issue with certain cron scheduling which causes jobs to be miss scheduled.   `* * * * 3` schedules every minute on a Wednesday, however `* * */1 * 3` should be equivalent but schedules every minute of everyday.  We have tracked the [issue](https://github.com/jmrozanec/cron-utils/issues/223) to the [cron-utils](https://github.com/jmrozanec/cron-utils) the cron library we use.  The issue isn't technically a misinterpreted cron, it is the calculation of the nextExecution() time.
+
 ## Contributing
 
 We heartily welcome external contributions to Metronome's codebase and documentation.
@@ -45,7 +49,7 @@ To build Metronome from source, check out this repo and use sbt to build a unive
 Mesos local mode allows you to run Metronome without launching a full Mesos
 cluster. It is meant for experimentation and not recommended for production
 use. Note that you still need to run ZooKeeper for storing state. The following
-command launches Metronome on Mesos in *local mode*. 
+command launches Metronome on Mesos in *local mode*.
 
     ./bin/metronome -Dmetronome.mesos.master.url=local
 
@@ -53,5 +57,4 @@ command launches Metronome on Mesos in *local mode*.
 ## Help
 
 Have you found an issue? Feel free to report it using our [Issues](https://github.com/dcos/metronome/issues) page.
-In order to speed up response times, please provide as much information on how to reproduce the problem as possible. 
-
+In order to speed up response times, please provide as much information on how to reproduce the problem as possible.
