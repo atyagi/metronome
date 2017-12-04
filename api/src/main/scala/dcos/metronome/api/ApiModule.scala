@@ -37,6 +37,8 @@ class ApiModule(
 
   lazy val scheduledJobSchedulerController = wire[ScheduledJobSpecController]
 
+  lazy val eventsController = wire[EventsController]
+
   lazy val authModule: AuthModule = wire[AuthModule]
 
   lazy val authorizer: Authorizer = authModule.authorizer
